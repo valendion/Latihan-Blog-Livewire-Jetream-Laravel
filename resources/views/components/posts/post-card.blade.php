@@ -1,4 +1,4 @@
-@props(['post']);
+@props(['post'])
 
 <div class="">
     <a href="#">
