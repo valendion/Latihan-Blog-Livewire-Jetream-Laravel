@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -14,7 +15,10 @@ class PostController extends Controller
     public function index()
     {
         return view('posts.index', [
-            'posts' => Post::take(5)->get()
+            'categories' => Category::whereHas('posts', function ($query) {
+                $query->published();
+            })
+                ->take(10)->get()
         ]);
     }
 
@@ -39,7 +43,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
     /**
